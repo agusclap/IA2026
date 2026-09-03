@@ -76,6 +76,12 @@ def texto(slide, x, y, w, h, lineas, anclaje=MSO_ANCHOR.TOP):
     return tb
 
 
+def notas(slide, contenido):
+    """Carga el guion del orador (visible solo en la vista Moderador)."""
+    tf = slide.notes_slide.notes_text_frame
+    tf.text = contenido.strip()
+
+
 def pie(slide, arriba=False):
     y = 0.62 if arriba else 7.02
     texto(slide, ANCHO - 5.6, y, 5.0, 0.3,
@@ -106,6 +112,18 @@ texto(s1, 9.15, 2.15, 2.9, 3.2, [
     {"t": "legendarios (8,1 %)", "size": 12, "color": GRIS},
 ])
 pie(s1)
+notas(s1, """
+[30 segundos — no te quedes acá]
+
+"Buenas. Soy Agustín Rodeyro y voy a presentar el análisis exploratorio del dataset de
+Pokémon de Kaggle: 800 registros, 13 columnas, 6 generaciones. El notebook completo está
+en el repositorio que figura abajo a la derecha."
+
+"El trabajo tiene dos partes: primero caracterizo el dataset y muestro tres rarezas en
+cómo está construido; después analizo los outliers y justifico qué hacer con ellos."
+
+[Pasá a la siguiente]
+""")
 
 # ============ DIAPOSITIVA 2 — EL DATASET ============
 s2 = nueva_slide()
@@ -141,6 +159,39 @@ texto(s2, 0.95, 5.88, 11.5, 1.1, [
      "size": 11.5, "antes": 3, "interlineado": 1.15},
 ])
 pie(s2, arriba=True)
+notas(s2, """
+[3 a 4 minutos]
+
+— ABRIR CON LA FICHA —
+"El dataset son 800 filas por 13 columnas, 179 KB: entra entero en memoria. Seis
+variables numéricas que son las stats base, una derivada que es Total, tres categóricas,
+una booleana y dos identificadores."
+
+"Lo primero que sorprende es que está limpio: cero duplicados exactos y cero nulos
+reales."
+
+— EL GANCHO —
+"Pero tiene tres rarezas en cómo está construido."
+
+— RAREZA 1 (señalá la barra naranja del gráfico) —
+"Type 2 tiene 386 nulos, casi la mitad del dataset. Parece el problema de calidad más
+obvio, pero no lo es: son Pokémon mono-tipo. La ausencia de un segundo tipo ES el dato.
+Si hiciera un dropna borraría el 48 % del dataset sin motivo. Es la diferencia entre un
+valor faltante y uno que no aplica."
+
+— RAREZA 2 —
+"El numeral no es clave primaria: hay 800 filas pero solo 721 números distintos. Las 49
+formas Mega comparten el número de Pokédex con su forma base: Charizard, Mega Charizard X
+y Mega Charizard Y son los tres el número 6."
+
+— RAREZA 3 —
+"Y Total es una columna derivada. Verifiqué que en las 800 filas es exactamente la suma
+de las seis stats, sin una sola excepción. Por eso en el heatmap correlaciona entre 0,6 y
+0,75 con todas: no es un hallazgo, es aritmética. Y para modelar, usar Total junto a las
+seis stats sería multicolinealidad perfecta."
+
+[Pasá a la siguiente]
+""")
 
 # ============ DIAPOSITIVA 3 — OUTLIERS ============
 s3 = nueva_slide()
@@ -179,6 +230,48 @@ texto(s3, 0.95, 5.88, 11.5, 1.1, [
      "size": 11.5, "antes": 0, "interlineado": 1.15},
 ])
 pie(s3, arriba=True)
+notas(s3, """
+[4 a 5 minutos — es la diapo que más pesa]
+
+— DETECCIÓN —
+"Para los outliers apliqué la regla del IQR de Tukey con k igual a 1,5: se marca todo lo
+que caiga fuera de Q1 menos 1,5 por el rango intercuartílico, y Q3 más 1,5. Dieron 52
+Pokémon, el 6,5 %, outliers en al menos una stat. Ninguna stat individual supera el 2,4 %,
+lo que descarta errores sistemáticos de carga."
+
+— EL REMATE (bajá la velocidad acá) —
+"Pero acá está lo interesante: Total no tiene ningún outlier, aunque sus seis componentes
+sí tienen."
+
+"El caso que lo explica es Shuckle: tiene 230 de defensa y 230 de defensa especial, los
+dos máximos del dataset, pero 5 de velocidad y 10 de ataque. Suma 505, que es un Pokémon
+del montón."
+
+"O sea: los outliers de este dataset no son de poder, son de perfil. El juego reparte un
+presupuesto fijo de puntos, y si te destacás en algo lo pagás en otra cosa."
+
+— NATURALEZA —
+"Después miré quiénes son, porque eso es lo que decide si se eliminan. Shedinja tiene 1 de
+HP: es el único outlier por debajo del límite en las 800 filas y las seis stats. Y no es
+un error de carga: en el juego tiene una habilidad que lo hace casi invulnerable, así que
+le pusieron un punto de vida a propósito. El valor más anómalo del dataset es diseño
+deliberado."
+
+— LA DECISIÓN —
+"Por eso no los elimino. El 36,5 % de los outliers son legendarios, cuando en el dataset
+entero son el 8,1 %: están 4,5 veces sobrerrepresentados. Ser extremo es lo que define a
+un legendario. Si los borrara perdería 19 de los 65, el 29 % de la clase minoritaria."
+
+"Acá el outlier es la señal, no el ruido."
+
+— CIERRE —
+"Y esa es la conclusión general: este dataset no tiene problemas de calidad, tiene
+desafíos de estructura. Multicolinealidad, alta cardinalidad en los tipos, desbalance de
+clase y casi-duplicados por las formas alternativas. Por eso las técnicas que propongo son
+RobustScaler, split agrupado por número de Pokédex, y stratify con métricas F1 o recall."
+
+"Gracias, quedo para preguntas."
+""")
 
 salida = AQUI / "EDA-Pokemon-Rodeyro.pptx"
 prs.save(str(salida))
