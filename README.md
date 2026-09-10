@@ -1,63 +1,54 @@
-# EDA — Dataset de Pokémon
+# Inteligencia Artificial — IUA 2026
 
-Análisis exploratorio de datos del dataset de Pokémon (800 registros, Kaggle),
-realizado para las actividades individuales de la materia **Inteligencia Artificial**
-del IUA.
+Actividades individuales de la materia Inteligencia Artificial.
+Una carpeta por actividad, cada una con su notebook ejecutado y sus datos.
 
-## Contenido
+## Actividades
 
-| Archivo | Descripción |
-|---|---|
-| `main.ipynb` | Notebook con el análisis completo, ejecutado. |
-| `Pokemon.csv` | Dataset utilizado (800 × 13). |
-| `slides/EDA-Pokemon-Rodeyro.pptx` | Las 3 diapositivas de la entrega. |
-| `slides/graficos.py` | Genera los gráficos del deck. |
-| `slides/armar_pptx.py` | Genera el `.pptx` a partir de esos gráficos. |
+| # | Tema | Carpeta | Entregable |
+|---|---|---|---|
+| 2–3 | EDA del dataset de Pokémon | [`actividad-03-eda-pokemon/`](actividad-03-eda-pokemon/) | Notebook + 3 diapositivas |
+| 4 | Dataset del Servicio Meteorológico Nacional | [`actividad-04-smn/`](actividad-04-smn/) | Notebook |
 
-## Análisis realizado
+## Actividad 3 — EDA del dataset de Pokémon
 
-**Actividad 2 — EDA base**
-- Identificación de tipos de variables.
-- Estadística descriptiva.
-- Relaciones entre variables (matriz de correlación).
-- Visualizaciones: histograma, heatmap y gráfico de barras.
+Análisis exploratorio completo de 800 registros: caracterización del dataset,
+detección de outliers por la regla del IQR, y análisis de desafíos y técnicas
+aplicables.
 
-**Actividad 3 — Caracterización, outliers y técnicas**
-- Características generales: tamaño, tipos de información, completitud y duplicados.
-- Detección de outliers por la regla del IQR (k = 1.5) e identificación de cada caso.
-- Análisis de asimetría (*skewness*) por variable.
-- Desafíos a priori del dataset y técnicas aplicables.
+Hallazgo principal: `Total` es la suma exacta de las 6 stats y **no tiene ningún
+outlier**, aunque sus seis componentes sí — los extremos se compensan porque el juego
+reparte un presupuesto fijo de puntos. Los outliers no son de poder, son de perfil.
 
-## Hallazgos principales
+Detalle completo en el [README de la actividad](actividad-03-eda-pokemon/README.md).
 
-1. **Los 386 nulos de `Type 2` no son datos faltantes.** Corresponden a Pokémon
-   mono-tipo: la ausencia de un segundo tipo *es* la información. Un `dropna()`
-   eliminaría el 48 % del dataset sin motivo.
+## Actividad 4 — Dataset del SMN
 
-2. **`#` no es una clave primaria.** Hay 800 filas pero solo 721 números distintos:
-   las 49 formas Mega comparten el número de Pokédex con su forma base.
+Cruce de las estaciones meteorológicas del SMN con sus estadísticas climatológicas
+normales (período 1981-2010), y análisis de la región Pampeana.
 
-3. **`Total` es una columna derivada.** Es la suma exacta de las 6 stats en las 800
-   filas, lo que implica multicolinealidad perfecta si se usa junto a ellas.
+Los dos puntos que definen el resultado:
 
-4. **Los outliers no son errores, son diseño.** 52 Pokémon (6.5 %) son outliers en al
-   menos una stat, pero `Total` no tiene ninguno: los extremos se compensan entre sí
-   porque el juego reparte un presupuesto fijo de puntos. Shedinja (HP = 1) es el único
-   outlier inferior y responde a una mecánica deliberada del juego. Los legendarios
-   están 4.5× sobrerrepresentados entre los outliers (36.5 % vs 8.1 %), por lo que
-   **el outlier es la señal, no el ruido**: no se eliminan.
+1. **Los nombres de estación no coinciden entre los dos archivos.**
+   `estaciones_smn.txt` no lleva tildes y `estadisticas.txt` sí (`CORDOBA AERO` contra
+   `CÓRDOBA AERO`), así que un `merge` por nombre exacto descarta 70 de 120 estaciones
+   sin avisar. Hay que normalizar los nombres antes de unir.
+
+2. **El nivel de agregación cambia las conclusiones.** Las variables `temp` y `prec_mm`
+   viven en una tabla larga con una fila por estación y por mes. Promediar el año antes
+   de analizar borra la estacionalidad: el desvío de la temperatura pasa de 5.20 °C a
+   1.71 °C, y eta cuadrado entre provincia y precipitación pasa de 0.067 ("asociación
+   débil") a 0.569 ("asociación fuerte"). Mismo dato, conclusión opuesta.
+
+`main_entregado.ipynb` conserva la versión original entregada, con ambos errores, para
+poder comparar.
 
 ## Herramientas
 
-Python 3.13 · pandas · numpy · matplotlib · seaborn · python-pptx
-
-## Reproducir
+Python 3.13 · pandas · numpy · matplotlib · seaborn · scipy · python-pptx
 
 ```bash
-pip install pandas numpy matplotlib seaborn python-pptx
-jupyter lab main.ipynb          # el análisis
-python slides/graficos.py       # regenera los gráficos
-python slides/armar_pptx.py     # regenera las diapositivas
+pip install pandas numpy matplotlib seaborn scipy python-pptx jupyter
 ```
 
 ## Autor
