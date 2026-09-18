@@ -1,0 +1,15 @@
+El archivo data_messi_full.csv fue generado a partir del dataset Lionel-Messi-Club-Goals disponible aquí:
+https://github.com/azminewasi/Lionel-Messi-Club-Goals/blob/main/data.csv
+
+Tiene las mismas variables que el dataset original y además:
+
+Minute_num: Minuto del partido en formato numérico (90+1 → 91).
+Goals_For: Goles del equipo de Messi en el resultado final del partido.
+Goals_Against: Goles del rival en el resultado final del partido.
+Match_Result: Resultado del partido: Win / Loss / Draw.
+Score_For: Goles del equipo de Messi en el momento del gol.
+Score_Against: Goles del rival en el momento del gol.
+Score_Diff: Diferencia de goles en el momento del gol.
+Season_Start: Año inicial de la temporada.
+Has_Assist: 1 si el gol tuvo asistencia, 0 si no.
+Set_Piece: 1 si el gol fue de penal o tiro libre, 0 si no.

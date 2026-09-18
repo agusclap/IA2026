@@ -9,6 +9,7 @@ Una carpeta por actividad, cada una con su notebook ejecutado y sus datos.
 |---|---|---|---|
 | 2–3 | EDA del dataset de Pokémon | [`actividad-03-eda-pokemon/`](actividad-03-eda-pokemon/) | Notebook + 3 diapositivas |
 | 4 | Dataset del Servicio Meteorológico Nacional | [`actividad-04-smn/`](actividad-04-smn/) | Notebook |
+| 5 | Cuestionario sobre los goles de Messi | [`actividad5/`](actividad5/) | Cuestionario + notebook |
 
 ## Actividad 3 — EDA del dataset de Pokémon
 
@@ -43,12 +44,26 @@ Los dos puntos que definen el resultado:
 `main_entregado.ipynb` conserva la versión original entregada, con ambos errores, para
 poder comparar.
 
+## Actividad 5 — Cuestionario sobre los goles de Messi
+
+Nueve preguntas de opción múltiple: cinco conceptuales y cuatro sobre el dataset
+`Lionel Messi Club Goals`. El notebook deriva cada respuesta desde el CSV y cita la
+diapositiva del teórico que la respalda.
+
+Explorando el dataset apareció un error que no entra en ninguna pregunta: **los
+marcadores de los partidos de visitante están invertidos**, porque vienen escritos en
+formato local:visitante. Por eso el dataset dice que Messi marcó en 254 partidos
+perdidos. Corregido son 22. El caso testigo es el 6-0 de Barcelona contra Atlético de
+Madrid, que figura como derrota con cero goles a favor.
+
+Detalle completo en el [README de la actividad](actividad5/README.md).
+
 ## Herramientas
 
-Python 3.13 · pandas · numpy · matplotlib · seaborn · scipy · python-pptx
+Python 3.13 · pandas · numpy · matplotlib · seaborn · scipy · scikit-learn · python-pptx
 
 ```bash
-pip install pandas numpy matplotlib seaborn scipy python-pptx jupyter
+pip install pandas numpy matplotlib seaborn scipy scikit-learn python-pptx jupyter
 ```
 
 ## Autor
