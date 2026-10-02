@@ -3,3 +3,6 @@ venv/
 .ipynb_checkpoints/
 __pycache__/
 *.pyc
+
+# notebook de trabajo, no entra en la entrega
+actividad-06-hanoi/anexo_analisis_independiente.ipynb

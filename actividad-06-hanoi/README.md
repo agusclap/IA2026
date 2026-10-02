@@ -12,11 +12,6 @@ es la plantilla de la cátedra con `search_algorithm` completada, más la verifi
 comparación. Al lado va `aima_libs/`, la biblioteca de la cátedra, copiada para que el
 notebook corra solo.
 
-Dejo también [`anexo_analisis_independiente.ipynb`](anexo_analisis_independiente.ipynb), que
-es una versión que armé antes con una formulación propia del estado, sin la biblioteca. Lo
-conservo porque ahí probé además profundidad, profundidad iterativa y búsqueda voraz, que en
-la entrega no están.
-
 ## Resultado
 
 Las métricas que devuelve la función:
@@ -112,6 +107,3 @@ jupyter notebook 01_ejercicio_torre_de_hanoi.ipynb
 
 La carpeta `aima_libs/` tiene que quedar al lado del notebook. Corre en segundos y no
 necesita datos externos.
-
-El anexo además usa matplotlib, y su celda de profundidad iterativa tarda alrededor de un
-minuto.
