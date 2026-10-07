@@ -9,6 +9,7 @@ ya ejecutado y sus datos.
 | 4 | Dataset del Servicio Meteorológico Nacional | [`actividad-04-smn/`](actividad-04-smn/) |
 | 5 | Cuestionario sobre los goles de Messi | [`actividad-05/`](actividad-05/) |
 | 6 | Torre de Hanoi con búsqueda A* | [`actividad-06-hanoi/`](actividad-06-hanoi/) |
+| 7 | N reinas con Simulated Annealing | [`actividad-07-nreinas/`](actividad-07-nreinas/) |
 
 ## Actividad 3 — EDA del dataset de Pokémon
 
@@ -73,6 +74,23 @@ uniforme. Subiendo la cantidad de discos se mantiene en `2^n` exacto mientras lo
 crecen con el espacio de estados.
 
 Más detalle en el [README de la actividad](actividad-06-hanoi/README.md).
+
+## Actividad 7 — N reinas con Simulated Annealing
+
+Ejercicio de la clase 8, también sobre la plantilla de la cátedra. Hay que ubicar 8 reinas
+en un tablero sin que ninguna ataque a otra, usando búsqueda local.
+
+El gradiente descendente solo se mueve si el vecino mejora, así que se traba en el primer
+mínimo local que encuentra. Simulated Annealing recorre los vecinos hasta aceptar uno y, si
+el elegido empeora, igual se mueve con probabilidad `exp(-delta / temperatura)`. Eso le
+permite salir de esos pozos. La temperatura arranca en 2 y se multiplica por 0.99 en cada
+paso, así que explora al principio y solo mejora sobre el final.
+
+En las cinco corridas pedidas encontró solución las 5 veces, contra 3 del gradiente
+descendente. Midiendo aparte con 2000 corridas por configuración, la diferencia real es
+todavía mayor: 16 % de éxito para el gradiente contra 98 % para Simulated Annealing.
+
+Más detalle en el [README de la actividad](actividad-07-nreinas/README.md).
 
 ## Herramientas
 
