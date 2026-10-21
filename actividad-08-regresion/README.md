@@ -63,15 +63,6 @@ las observaciones. Coeficientes grandes y opuestos son la señal típica de un m
 apoya en el ruido del entrenamiento. Notar además que `Examination` cambia de signo entre
 los dos modelos, otro síntoma de inestabilidad por la correlación entre atributos.
 
-## Una observación que no entra en la consigna
-
-Por curiosidad probé también Ridge con el mismo pipeline y los mismos alphas. Sobre este
-split da mejores métricas que los dos: MAE 5.2797, MSE 51.9024 y R² 0.6573.
-
-No lo entregué porque la consigna pide explícitamente el modelo que hace selección
-automática de variables, y Ridge no puede: no anula ningún coeficiente. Vale aclarar además
-que el alpha que eligió fue 10.0, que es el extremo del array dado, o sea que quería todavía
-más regularización de la que el rango permitía.
 
 ## Cómo correrlo
 
