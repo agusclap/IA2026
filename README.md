@@ -10,6 +10,7 @@ ya ejecutado y sus datos.
 | 5 | Cuestionario sobre los goles de Messi | [`actividad-05/`](actividad-05/) |
 | 6 | Torre de Hanoi con búsqueda A* | [`actividad-06-hanoi/`](actividad-06-hanoi/) |
 | 7 | N reinas con Simulated Annealing | [`actividad-07-nreinas/`](actividad-07-nreinas/) |
+| 8 | Regresión sobre el dataset Swiss | [`actividad-08-regresion/`](actividad-08-regresion/) |
 
 ## Actividad 3 — EDA del dataset de Pokémon
 
@@ -91,6 +92,24 @@ descendente. Midiendo aparte con 2000 corridas por configuración, la diferencia
 todavía mayor: 16 % de éxito para el gradiente contra 98 % para Simulated Annealing.
 
 Más detalle en el [README de la actividad](actividad-07-nreinas/README.md).
+
+## Actividad 8 — Regresión sobre el dataset Swiss
+
+Ejercicio de la clase 10, sobre la plantilla de la cátedra. Hay que predecir la tasa de
+fertilidad de 47 provincias suizas a partir de sus atributos socioeconómicos, comparando una
+regresión lineal múltiple contra un modelo regularizado.
+
+Elegí **Lasso**, que es lo que pide la consigna: de las dos penalizaciones, solo L1 puede
+llevar coeficientes a cero exacto y hacer selección automática de variables. El mejor alpha
+lo buscó `LassoCV` con validación cruzada de 3 folds.
+
+Lasso ganó en las tres métricas, aunque por poco, y sobre todo lo hizo con un atributo
+menos: eliminó `Agriculture`, que correlaciona -0.69 con `Examination` y -0.64 con
+`Education`, así que era redundante. También achicó mucho los coeficientes, de un máximo de
+9.93 en el modelo sin regularizar a 3.20, lo cual importa porque se ajustan 5 coeficientes
+con apenas 23 observaciones de entrenamiento.
+
+Más detalle en el [README de la actividad](actividad-08-regresion/README.md).
 
 ## Herramientas
 
