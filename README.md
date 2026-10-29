@@ -11,6 +11,7 @@ ya ejecutado y sus datos.
 | 6 | Torre de Hanoi con búsqueda A* | [`actividad-06-hanoi/`](actividad-06-hanoi/) |
 | 7 | N reinas con Simulated Annealing | [`actividad-07-nreinas/`](actividad-07-nreinas/) |
 | 8 | Regresión sobre el dataset Swiss | [`actividad-08-regresion/`](actividad-08-regresion/) |
+| 9 | Detector de SPAM | [`actividad-09-spam/`](actividad-09-spam/) |
 
 ## Actividad 3 — EDA del dataset de Pokémon
 
@@ -110,6 +111,27 @@ menos: eliminó `Agriculture`, que correlaciona -0.69 con `Examination` y -0.64 
 con apenas 23 observaciones de entrenamiento.
 
 Más detalle en el [README de la actividad](actividad-08-regresion/README.md).
+
+## Actividad 9 — Detector de SPAM
+
+Ejercicio de la clase 11, sobre la plantilla de la cátedra. Hay que detectar SPAM en 4601
+correos descritos por frecuencias de palabras, comparando una regresión logística con un
+Bayes ingenuo.
+
+Para el Bayes elegí `MultinomialNB`, que es la implementación pensada para datos de
+frecuencia. Va sin escalado, y no solo porque lo pida la consigna: necesita valores no
+negativos, y estandarizar generaría negativos y rompería el modelo.
+
+Lo interesante es que cada modelo gana en una métrica distinta porque comete el error
+opuesto. La regresión logística deja pasar SPAM, con 75 falsos negativos contra 33 falsos
+positivos. Naive Bayes hace lo contrario: casi no se le escapa SPAM, pero bloquea 154 de los
+804 correos legítimos, casi 1 de cada 5.
+
+Para este problema el error grave es el falso positivo, porque un correo real que cae en la
+carpeta de SPAM no se lee nunca, mientras que un SPAM en la bandeja se borra y listo. Por eso
+conviene la regresión logística, que gana en precision y en AUC.
+
+Más detalle en el [README de la actividad](actividad-09-spam/README.md).
 
 ## Herramientas
 
